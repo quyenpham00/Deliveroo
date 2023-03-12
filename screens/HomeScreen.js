@@ -16,12 +16,12 @@ import {
 } from 'react-native-heroicons/outline'
 import Categories from '../components/Categories'
 import FeaturedRow from '../components/FeaturedRow'
-import sanityClient from "../sanity";
+import sanityClient from '../sanity'
 
 const HomeScreen = () => {
   const navigation = useNavigation()
-  const [featuredCatetories, setFeaturedCategories] = useState([]);
-  
+  const [featuredCatetories, setFeaturedCategories] = useState([])
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShow: false,
@@ -30,8 +30,9 @@ const HomeScreen = () => {
 
   //Tien Code
   useEffect(() => {
-	sanityClient.fetch(
-		`
+    sanityClient
+      .fetch(
+        `
 			*[_type == 'featured] {
 				...,
 			restaurants[]->{
@@ -40,11 +41,11 @@ const HomeScreen = () => {
 			}
 			}
 		`
-	)
-	.then((data) => {
-		setFeaturedCategories(data);
-	})
-  }, []);
+      )
+      .then((data) => {
+        setFeaturedCategories(data)
+      })
+  }, [])
 
   return (
     <SafeAreaView className='bg-white pt-5'>
@@ -82,16 +83,16 @@ const HomeScreen = () => {
       >
         <Categories />
 
-		{/* Featured */}
-		{featuredCatetories?.map((category) => {
-			<FeaturedRow
-				key={category._id}
-				id={category._id}
-				title={category.name}
-				description={category.short_description}
-			/>
-		})}
-        
+        {/* Featured */}
+        {featuredCatetories?.map((category) => (
+          <FeaturedRow
+            key={category._id}
+            id={category._id}
+            title={category.name}
+            description={category.short_description}
+          />
+        ))}
+
         {/* <FeaturedRow
           id='123'
           title='Tasty Discounts'
