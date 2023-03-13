@@ -11,16 +11,16 @@ const FeaturedRow = ({ id, title, description }) => {
     sanityClient
       .fetch(
         `
-			*[_type == 'featured' && _id = $id] {
-				...,
-				restaurants[] -> {
-					...,
-					dishes[] ->,
-					type -> {
-						name
-					}
-				},
-			}[0]
+			*[_type == "featured" && _id == $id] {
+        ...,
+        restaurants[]->{
+          ...,
+          dishes[]->,
+          type-> {
+            name
+          }
+        },
+      }[0]
 		`,
         { id }
       )

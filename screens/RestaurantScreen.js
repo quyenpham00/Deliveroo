@@ -35,20 +35,19 @@ const RestaurantScreen = () => {
   } = useRoute()
 
   useEffect(() => {
-    dispatch(
-      setRestaurant({
-        id,
-        imgUrl,
-        title,
-        rating,
-        genre,
-        address,
-        shortDescription,
-        dishes,
-        long,
-        lat,
-      })
-    )
+    dispatch()
+    setRestaurant({
+      id,
+      imgUrl,
+      title,
+      rating,
+      genre,
+      address,
+      shortDescription,
+      dishes,
+      long,
+      lat,
+    })
   }, [])
 
   useLayoutEffect(() => {
@@ -65,7 +64,7 @@ const RestaurantScreen = () => {
         <View className='relative'>
           <Image
             source={{
-              uri: urlFor(imgUrl).url(),
+              uri: imgUrl ? urlFor(imgUrl).url() : '',
             }}
             className='h-56 w-full bg-gray-300 p-4'
           />
