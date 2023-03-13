@@ -35,19 +35,20 @@ const RestaurantScreen = () => {
   } = useRoute()
 
   useEffect(() => {
-    dispatch()
-    setRestaurant({
-      id,
-      imgUrl,
-      title,
-      rating,
-      genre,
-      address,
-      shortDescription,
-      dishes,
-      long,
-      lat,
-    })
+    dispatch(
+      setRestaurant({
+        id,
+        imgUrl,
+        title,
+        rating,
+        genre,
+        address,
+        shortDescription,
+        dishes,
+        long,
+        lat,
+      })
+    )
   }, [])
 
   useLayoutEffect(() => {
@@ -110,6 +111,7 @@ const RestaurantScreen = () => {
         <View className='pb-36'>
           <Text className='px-4 pt-6 mb-3 font-bold text-xl'>Menu</Text>
 
+          {/* Dishrows */}
           {dishes?.map((dish) => (
             <DishRow
               key={dish._id}

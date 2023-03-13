@@ -11,7 +11,7 @@ const FeaturedRow = ({ id, title, description }) => {
     sanityClient
       .fetch(
         `
-			*[_type == "featured" && _id == $id] {
+      *[_type == "featured" && _id == $id] {
         ...,
         restaurants[]->{
           ...,
@@ -21,13 +21,16 @@ const FeaturedRow = ({ id, title, description }) => {
           }
         },
       }[0]
-		`,
+    `,
         { id }
       )
       .then((data) => {
         setRestaurants(data?.restaurants)
       })
-  }, [])
+      .catch((err) => {
+        console.log('Err at Featured Row:', err)
+      })
+  }, [id])
 
   return (
     <View>
@@ -35,15 +38,13 @@ const FeaturedRow = ({ id, title, description }) => {
         <Text className='font-bold text-lg'>{title}</Text>
         <ArrowRightIcon color='#00CCBB' />
       </View>
-
-      <Text className='text-xs text-gray-500 px-4'>{description}</Text>
+      <Text className=' text-xs text-gray-500 px-4'>{description}</Text>
       <ScrollView
         horizontal
         contentContainerStyle={{ paddingHorizontal: 15 }}
         showsHorizontalScrollIndicator={false}
         className='pt-4'
       >
-        {/* Restaurants */}
         {restaurants?.map((restaurant) => (
           <RestaurantCard
             key={restaurant._id}
@@ -53,48 +54,12 @@ const FeaturedRow = ({ id, title, description }) => {
             rating={restaurant.rating}
             genre={restaurant.type?.name}
             address={restaurant.address}
-            short_description={restaurant.short_description}
-            dishes={[]}
+            shortDescription={restaurant?.short_description}
+            dishes={restaurant.dishes}
             long={restaurant.long}
             lat={restaurant.lat}
           />
         ))}
-        {/*<RestaurantCard
-				id={123}
-				imgUrl='https://links.papareact.com/gn7'
-				title='Yo! Sushi!'
-				rating={4.5}
-				genre='Japanese'
-				address='123 Main Street'
-				short_description='This is a test description'
-				dishes={[]}
-				long={20}
-				lat={0}
-			/>
-			 <RestaurantCard
-			id={123}
-			imgUrl='https://links.papareact.com/gn7'
-			title='Yo! Sushi!'
-			rating={4.5}
-			genre='Japanese'
-			address='123 Main Street'
-			short_description='This is a test description'
-			dishes={[]}
-			long={20}
-			lat={0}
-			/>
-			<RestaurantCard
-			id={123}
-			imgUrl='https://links.papareact.com/gn7'
-			title='Yo! Sushi!'
-			rating={4.5}
-			genre='Japanese'
-			address='123 Main Street'
-			short_description='This is a test description'
-			dishes={[]}
-			long={20}
-			lat={0}
-			/> */}
       </ScrollView>
     </View>
   )
