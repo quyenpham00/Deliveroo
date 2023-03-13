@@ -48,7 +48,7 @@ const DishRow = ({ id, name, description, price, image }) => {
           <View>
             <Image
               style={{
-                borderWidth: 1,
+                borderWidth: '1',
                 borderColor: '#F3F3F4',
               }}
               source={{
